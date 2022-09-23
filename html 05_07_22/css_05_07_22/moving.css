@@ -1,0 +1,58 @@
+img {
+    position: relative;
+}
+
+@keyframes movement {
+    0% {
+        left: 0px;
+        top: 0px;
+    }
+
+    13% {
+        opacity: 0%;
+    }
+
+    25% {
+        left: 300px;
+        top: 0px;
+        opacity: 100%;
+    }
+
+    38% {
+        opacity: 0%;
+    }
+
+    50% {
+        left: 300px;
+        top: 300px;
+        opacity: 100%;
+    }
+
+    63% {
+        opacity: 0%;
+    }
+
+    75% {
+        left: 0px;
+        top: 300px;
+        opacity: 100%;
+    }
+
+    88% {
+        opacity: 0%;
+    }
+
+    100% {
+        left: 0px;
+        top: 0px;
+        opacity: 100%;
+    }
+
+}
+
+
+img {
+    animation-name: movement;
+    animation-duration: 4s;
+    animation-iteration-count: infinite;
+}

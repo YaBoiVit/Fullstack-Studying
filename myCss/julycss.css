@@ -1,0 +1,23 @@
+.square {
+    background-color: rgb(100, 100, 100);
+    padding: 50px;
+    margin-left: 300px;
+    margin-right: 300px;
+}
+
+
+.avatar {
+    padding-left: 270px;
+    height: 150px;
+    width: 150px;
+}
+
+.test {
+    position: sticky;
+    color: black;
+    top: 0;
+    border: 1px solid green;
+    margin-left: 300px;
+    margin-right: 300px;
+    background-color: gray;
+}

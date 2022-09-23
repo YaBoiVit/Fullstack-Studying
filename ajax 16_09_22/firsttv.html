@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TvMaze</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+
+    <style>
+      .summeryDV {
+        height: 200px;
+        overflow: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="showContainer" class="row"></div>
+    <script>
+      var shows = []
+      //var url = 'http://api.tvmaze.com/shows'
+      var url = 'https://api.tvmaze.com/search/shows?q=hero'
+      $.ajax({
+        type: 'GET',
+        datatype: 'json',
+        url: url,
+        success: function (data) {
+          shows = data
+          printShows()
+        },
+        error: function (error) {
+          console.log('error : ', error)
+        },
+      })
+
+      function printShows() {
+        // console.log(shows)
+        for (var i = 0; i < shows.length; i++) {
+          //   console.log(shows[i])
+          //   var s = {
+          //     score: 1,
+          //     show: { image, name, summary },
+          //   }
+          //   printShow(s.show)
+          printShow(shows[i].show)
+        }
+      }
+
+      function printShow(show) {
+        // showContainer.innerHTML += `<div>${show.name}</div>`
+        // showContainer.innerHTML += `<hr/>`
+        showContainer.innerHTML += `
+          <div class="col-3">
+        <div
+          class="card"
+          style="margin: 10px; border: 1px solid gray"
+        >
+          <img
+            src="${show.image.medium}"
+            class="card-img-top"
+            alt="..."
+          />
+
+          <div class="card-body">
+            <h5 class="card-title">${show.name}</h5>
+            <div class="summeryDV">
+              ${show.summary}
+            </div>
+          </div>
+        </div>
+      </div>`
+      }
+    </script>
+
+    <script></script>
+  </body>
+</html>
+
+<!-- 
+"id": 1,
+"url": "https://www.tvmaze.com/shows/1/under-the-dome",
+"name": "Under the Dome",
+"type": "Scripted",
+"language": "English",
+"genres": [3 items],
+"status": "Ended",
+"runtime": 60,
+"averageRuntime": 60,
+"premiered": "2013-06-24",
+"ended": "2015-09-10",
+"officialSite": "http://www.cbs.com/shows/under-the-dome/",
+"schedule": {2 items},
+"rating": {1 item},
+"weight": 99,
+"network": {4 items},
+"webChannel": null,
+"dvdCountry": null,
+"externals": {3 items},
+"image": {2 items},
+"summary": "<p><b>Under the Dome</b> is the story of a small town that is suddenly and inexplicably sealed off from the rest of the world by an enormous transparent dome. The town's inhabitants must deal with surviving the post-apocalyptic conditions while searching for answers about the dome, where it came from and if and when it will go away.</p>",
+"updated": 1631010933,
+"_links": {2 items} -->

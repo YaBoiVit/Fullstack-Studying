@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bootstrap forms</title>
+
+    <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+    crossorigin="anonymous"
+  />
+
+  <style>
+    .formBorder{
+        border: 1px solid gray;
+        padding: 70px;
+        border-radius: 10px;
+    }
+
+    .rowcontainer{
+        background-color: #f5f5f5;
+    }
+  </style>
+</head>
+<body>
+    <div class="row p-5 ">
+        <div class="col-8 formBorder rowcontainer">
+            <form id="formEL">
+
+                <div class="form-group">
+                    <label for="PersonName">Your Name</label>
+                    <input type="text" class="form-control" id="PersonName"  placeholder="Name" >
+                    <small id="emailHelp" class="form-text text-muted"></small>
+                </div>
+                <div class="form-group">
+                  <label for="UserName">Username</label>
+                  <input type="text" class="form-control" id="UserName"  placeholder="Username" >
+                  <small id="emailHelp" class="form-text text-muted"></small>
+                </div>
+                <div class="form-group">
+                  <label for="PhoneNum">Phone Number</label>
+                  <input type="password" class="form-control" id="PhoneNum" placeholder="Password">
+                </div>
+                <label for="AreaLocation">Your Area:</label>
+                <select class="form-select" aria-label="Default select example" id="AreaLocation">
+                  <option selected>Open this select menu</option>
+                  <option value="North">North</option>
+                  <option value="Center">Center</option>
+                  <option value="South">South</option>
+                </select>
+                <!-- <div class="form-group">
+                    <label for="exampleFormControlSelect1">Example select</label>
+                    <select class="form-control" id="exampleFormControlSelect1">
+                      <option>כן</option>
+                      <option>לא</option>
+                    </select>
+                  </div> -->
+                <!-- <div class="form-check">
+                  <input type="checkbox" class="form-check-input" id="Check1">
+                  <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                </div> -->
+                <button style="margin-top:5px" type="button" class="btn btn-primary" onclick="UserAdd()">Add User</button>
+                <button style="margin-top:5px" type="button" class="btn btn-primary" onclick="CloseOrOpen()">Print Table</button>
+                <button style="margin-top:5px" type="button" class="btn btn-primary" onclick="UserPrint()">Print Users</button>
+            </form>
+          </div>
+    </div>
+    <div class="row">
+      <div class="col-6 p-5">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Name</th>
+              <th scope="col">User Name</th>
+              <th scope="col">Phone</th>
+              <th scope="col">Area</th>
+              <th scope="col">User Details</th>
+            </tr>
+          </thead>
+          <tbody id="TableDV">
+<!-- Table Contents -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div id="detailsDV">
+
+    </div>
+    <script>
+        var saved = []
+        flag=false;
+            function UserAdd(){
+            var container = {
+              Person:PersonName.value ,
+              User:UserName.value ,
+              Phone:PhoneNum.value ,
+              Area:AreaLocation.value
+            }
+            saved.push(container)
+              formEL.reset();
+            }
+        function UserPrint(){
+        console.log(saved)
+        for(var i=0;i<saved.length;i++){
+          var PrintAll = `<hr/>
+          <div>
+              <div> Name: ${saved[i].Person}</div>
+              <div> User Name: ${saved[i].User}</div>
+              <div> Phone: ${saved[i].Phone}</div>
+              <div> Area: ${saved[i].Area}</div>
+          </div>`
+          document.body.innerHTML += PrintAll
+        }
+      }
+      function PrintTable() {
+        for(var i=0;i<saved.length;i++){
+        var TableRow = `
+        <tr>
+          <th scope="row">${i+1}</th>
+          <td> ${saved[i].Person}</td>
+          <td> ${saved[i].User}</td>
+          <td> ${saved[i].Phone}</td>
+          <td> ${saved[i].Area}</td>
+          <td> <button style="margin-top:5px" type="button" class="btn btn-primary" onclick="DetailPrint(${i})">Details</button></td>
+          </tr>`
+        TableDV.innerHTML+=TableRow
+        flag=!flag
+      }
+    }
+    function DetailPrint(cnt) {
+      var Print = `<hr/>
+          <div>
+              <div> Name: ${saved[cnt].Person}</div>
+              <div> User Name: ${saved[cnt].User}</div>
+              <div> Phone: ${saved[cnt].Phone}</div>
+              <div> Area: ${saved[i].Area}</div>
+          </div>`
+        detailsDV.innerHTML += Print
+    }
+    function CloseOrOpen() {
+      if(flag==true) {
+        TableDV.innerHTML=''
+        flag=!flag
+      }
+      else 
+        PrintTable()      
+    }
+    </script>
+</body>
+</html>

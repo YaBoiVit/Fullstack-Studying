@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="todos.js"></script>
+    <style>
+        .titleDV{
+            font-size: 20px;
+        }
+        .cont{
+            border: 1px solid gray;
+            margin-top: 10px;
+            width:500px;
+            padding: 10px;
+        }
+        .userDV{
+            font-size:25px;
+            font-weight:bold;
+        }
+    </style>
+</head>
+<body>
+    <div id="containerId">    </div>
+    <script>
+        var printToHtml = ''
+        for(var i = 0; i < todos.length; i++) {
+        printTitle(todos[i])
+        }
+        function printTitle(todo) {
+        printToHtml += '<div class="cont">'
+        printToHtml += '<div class="userDV">' +"Id: "+ todo.id+ '</div>';
+        printToHtml += '<div class="titleDV">'+"Title: " +todo.title+ '</div>';
+        printToHtml += '</div>'
+        }
+        containerId.innerHTML = printToHtml; 
+    </script>
+</body>
+</html>

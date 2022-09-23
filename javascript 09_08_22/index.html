@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+</head>
+<body>
+    <script>
+        var mainDV = ""
+        var names = ['a', 'b', 'c','d', 'e', 'f', 'g', 'h', 'i'];
+        function printDV() {
+        for (var i = 0; i < names.length; i++) {
+            mainDV = document.createElement("div")
+            document.body.appendChild(mainDV)
+            mainDV.innerHTML = names[i]
+            mainDV.innerHTML += ("<hr/>")
+        }
+        }
+        printDV()   
+    </script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TvMaze</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+    crossorigin="anonymous"
+    />
+    <style>
+        .summeryDV {
+            height: 200px;
+            overflow: auto;
+        }
+        </style>
+</head>
+<body>
+    <div id="showContainer" class="row"></div>
+    <script>
+    var ShowID = localStorage.getItem('ShowID')
+    var DetailsUrl = 'http://api.tvmaze.com/shows/'
+    var SingleUrl = DetailsUrl+ShowID;
+        $.ajax({
+        type: 'GET',
+        datatype: 'json',
+        url: SingleUrl,
+        success: function (data) {
+        shows = data
+        printShow()
+        },
+        error: function (error) {
+        console.log('error : ', error)
+        },
+    })
+    function printShow() {
+        showContainer.innerHTML += `
+        <div class="col-3">
+        <div
+        class="card"
+        style="margin: 10px; border: 1px solid gray"
+        >
+        <img
+            src="${shows.image.medium}"
+            class="card-img-top"
+            alt="..."
+        />
+        <div class="card-body">
+            <h5 class="card-title">${shows.name}</h5>
+            <div class="summeryDV">
+            ${shows.summary}
+            </div>
+        </div>
+        </div>
+    </div>`
+    }
+    </script>
+</body>
+</html>

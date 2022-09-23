@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>todos</title>
+    <script src="todos.js"></script>
+    <style>
+        .titleCss {
+            font-size: 30px;
+        }
+        .hrDVcss {
+            border: 1px solid black;
+            
+        }
+    </style>
+</head>
+<body>
+<script>
+    var titleDV=''
+    var hrDV=''
+
+    for(var i=0;i<todos.length;i++) {
+        printTitle(todos[i].title)
+    }
+    function printTitle(title){
+        titleDV = document.createElement('div')
+        titleDV.innerHTML = title
+        titleDV.classname = 'titleCss'
+        document.body.appendChild(titleDV)
+        createHR()
+    }
+    function createHR(){
+        hrDV=document.createElement('div')
+        hrDV.classname = 'hrDVcss'
+        document.body.appendChild(hrDV)
+    }
+
+</script>
+</body>
+</html>
