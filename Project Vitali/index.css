@@ -4,6 +4,9 @@ body {
     background-attachment: fixed;
     background-size: cover;
 }
+label{
+    font-size: 15px;
+}
 .center{
     display: block;
     margin-left: auto;
@@ -25,7 +28,7 @@ body {
 .notetext{
     position: absolute;
     top:450px;
-    padding:5px
+    padding:5px;
 }
 .stickynote{
 background-image: url("img/notebg.png");
@@ -40,9 +43,21 @@ margin-left: 5%;
 margin-right: 0px;
 padding:0px;
 }
+.stickynote:hover .btn-close{
+    display: block;
+    position: absolute;
+}
+.btn-close{
+display:none;
+float: left;
+margin-left: 145px;
+margin-top: 25px;
+font-size: 100%;
+}
 .stickynote:last-of-type{
 animation: fadein 1s;
 }
+/* Check online to use CSS in JS */
 .stickytask{
 max-width: 150px;
 height: 120px;
@@ -69,16 +84,11 @@ margin-left: 10px;
 margin-top: 190px;  
 font-size: 100%;     
 }
-.btn-close{
-float: left;
-margin-left: 140px;
-margin-top: 30px;
-font-size: 100%;
-}
 @keyframes fadein {
 from { opacity: 0; }
 to   { opacity: 1; }
 }
 #TextDV{
     display: block;
+    padding:30px;
 }
