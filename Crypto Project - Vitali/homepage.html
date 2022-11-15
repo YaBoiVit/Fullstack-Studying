@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+    crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+    crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+    crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+    crossorigin="anonymous"></script>
+    <title>Crypto Project</title>
+    <style>
+    .TitleDV {
+    border-bottom: 2px solid white;
+    margin-bottom: 10px;
+    padding: 5px;
+    }
+    .TitleDV h1 {
+    position: relative;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    color: white;
+    }
+    #logo {
+    float: left;
+    width: 50px;
+    }
+    .MainPage {
+    background-image: url("images/background.jpg");
+    height: 100%;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    }
+    .SearchBox {
+    float: right;
+    padding: 5px;
+    }
+    .navbar {
+    margin-bottom: 10px;
+    background-color: rgba(18, 17, 17, 0.859) !important;
+    margin-inline: 10%;
+    }
+    #CoinPage{
+    margin-inline: 10%;
+    }
+    .card img {
+    margin-inline: 43%;
+    width: 40px;
+    padding-top: 5%;
+    }
+    .card {
+    background-color: rgba(18, 17, 17, 0.859);
+    color: white;
+    text-align: center;
+    margin-bottom: 10px;
+    }
+    .btn {
+    color:white;
+    border-color: #ffc942;
+    }
+    .btn:hover {
+    color: #ffc942;
+    }
+    </style>
+</head>
+
+<!-- Ask about: -->
+<!-- Collapse,Navbar,Find -->
+
+<body class="MainPage">
+    <div class="TitleDV"> 
+        <img id="logo" src="images/toplogo.png" alt="logo" />
+        <h1> CryptoView </h1>
+    </div>
+        <nav id="nav" class="navbar navbar-expand-lg"> <!--Swap to buttons--> 
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <!-- <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                <a class="nav-link" id="home" href="#"> Coins </a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" id="livereports" href="#"> Live Reports </a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" id="about" href="#"> About </a>
+                </li>
+            </ul> -->
+            <form class="SearchBox form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="text" id="SearchInput" placeholder="Search Coins" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" onclick="PrintSearchCoin(SearchInput.value)" type="submit">Search</button>
+            </form>
+            </div>
+        </nav>
+        
+        <div id="CoinPage" class="row"></div>
+        
+<script>
+var HomeCoins = []
+var baseUrl = 'https://api.coingecko.com/api/v3/coins'
+var SearchCoins = []
+var SavedCoins = []
+callajax(printCoins, 0)
+function callajax(_function,id=0) {   /**Main ajax**/
+    let url
+    if (id == 0) {
+    url = baseUrl
+} else {
+    url = baseUrl + '/' + id
+}
+    $.ajax({
+        type: 'GET',
+        datatype: 'json',
+        url: url,
+        success: function (data) {
+        _function(data)
+        },
+        error: function (error) {
+        console.log('error : ', error)
+        },
+    })
+}
+function printCoins(data){
+    HomeCoins = data
+    HomeCoins.map((coin) => {
+    let str = `
+<div class="card col-4">
+    <img class="card-img-top" src="${coin.image.large}" alt="Card image cap">
+        <div class="card-body">
+        <h5 class="card-title">${coin.name}</h5>
+        <button class="btn" type="button" onClick="CoinClicked(${coin.id})" data-toggle="collapse" data-target="#CardCollapse" aria-expanded="false" aria-controls="collapseExample">
+        More Info </button>
+            <div class="collapse" id="CardCollapse"></div>
+            <div class="Card card-body"></div>
+        </div>
+</div>`
+    CoinPage.innerHTML += str
+})
+console.log(data)
+}
+function PrintSearchCoin(input){
+    console.log(input)
+    let FindCoin = HomeCoins.find(NewCoin =>{
+        return NewCoin.id == input })
+    console.log(NewCoin)
+}
+        </script>
+</body>
+</html>
