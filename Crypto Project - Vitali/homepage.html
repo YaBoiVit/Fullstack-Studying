@@ -17,7 +17,10 @@
     crossorigin="anonymous">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
     crossorigin="anonymous"></script>
+    <script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+    <script src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
     <title>Crypto Project</title>
+    <link rel="stylesheet" type="text/css" href="switch.css">
     <style>
     .TitleDV {
     border-bottom: 2px solid white;
@@ -42,22 +45,18 @@
     background-repeat: no-repeat;
     background-size: cover;
     }
-    .SearchBox {
-    float: right;
-    padding: 5px;
-    }
     .navbar {
     margin-bottom: 10px;
-    background-color: rgba(18, 17, 17, 0.859) !important;
+    background-color: rgba(18, 17, 17, 0.859) ;
     margin-inline: 10%;
     }
     #CoinPage{
     margin-inline: 10%;
     }
-    .card img {
-    margin-inline: 43%;
-    width: 40px;
-    padding-top: 5%;
+    .card-img-top {
+    width: 50px;
+    padding-top: 2%;
+    margin-left: 43%;
     }
     .card {
     background-color: rgba(18, 17, 17, 0.859);
@@ -68,52 +67,132 @@
     .btn {
     color:white;
     border-color: #ffc942;
+    margin-top: 5px;
     }
     .btn:hover {
     color: #ffc942;
     }
+    .SearchBox {
+    float: right;;
+    padding: 5px;
+    }
+    .chartstyle {
+    display: inline-block;
+    width: 100%;
+    height: 500px;
+    z-index: 20;
+    }
+    #chartContainer {
+    display: inline-block;
+    text-align: center;
+    margin-top: 10%;
+    size: 90%;
+    z-index: 20;
+    }
+    .card-img-bottom {
+    width: 40px;
+    padding-top: 2px;
+    float: left;
+    }
+    .CoinName {
+    padding-top: 10px;
+    margin-right: 35px;
+    }
+    .Value {
+    text-align: left;
+    }
+    .AboutPageText {
+    color: white;
+    text-shadow: 2px 2px 4px #000000;
+    text-align: center;
+    }
+    .AboutImg {
+    width: 200px;
+    margin: auto;
+    }
+    .loader {
+    display: inline-block;
+    width: 150px;
+    height: 150px;
+    margin-inline: 43%;
+    }
+    .loader:after {
+    content: " ";
+    display: block;
+    width: 150px;
+    height: 150px;
+    margin: 8px;
+    border-radius: 50%;
+    border: 6px solid #fff;
+    border-color: #fff transparent #fff transparent;
+    animation: lds-dual-ring 1.2s linear infinite;
+    }
+    @keyframes lds-dual-ring {
+    0% {
+    transform: rotate(0deg);
+    }
+    100% {
+    transform: rotate(360deg);
+    }
+    }
     </style>
 </head>
 
-<!-- Ask about: -->
-<!-- Collapse,Navbar,Find -->
+<!-- Things To Do: -->
+<!-- Live Graph [Wont show], Toggle Check[Cant send object] , Modal -->
 
 <body class="MainPage">
     <div class="TitleDV"> 
         <img id="logo" src="images/toplogo.png" alt="logo" />
         <h1> CryptoView </h1>
-    </div>
-        <nav id="nav" class="navbar navbar-expand-lg"> <!--Swap to buttons--> 
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    </div class="Navigation">
+        <nav id="nav" class="navbar navbar-expand-lg"> <!--Navigation Bar--> 
             <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <!-- <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                <a class="nav-link" id="home" href="#"> Coins </a>
-                </li>
-                <li class="nav-item">
-                <a class="nav-link" id="livereports" href="#"> Live Reports </a>
-                </li>
-                <li class="nav-item">
-                <a class="nav-link" id="about" href="#"> About </a>
-                </li>
-            </ul> -->
-            <form class="SearchBox form-inline my-2 my-lg-0">
+            <div class="Buttons">
+            <button class="btn" type="button" onclick="HomeButton()">
+                    Home </button>
+            <button class="btn" type="button" onclick="ReportsClicked()">
+                        Live Reports </button>
+            <button class="btn" type="button" onclick="AboutClicked()">
+                            About</button>
+            <button class="btn" type="button" onclick="ModalCoinsPrint()"data-toggle="modal" data-target="#CoinModal">
+                            Modal</button> 
+            <form id="formEL" class="SearchBox form-inline">
                 <input class="form-control mr-sm-2" type="text" id="SearchInput" placeholder="Search Coins" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" onclick="PrintSearchCoin(SearchInput.value)" type="submit">Search</button>
+                <button class="btn my-2 my-sm-0" type="button" onclick="PrintSearchCoin(SearchInput.value)">Search</button>
             </form>
-            </div>
         </nav>
+    </div>
+    <div class="loader" id="loader"></div>
+    <div id="CoinPage" class="row"></div>  <!--Main Page-->
+<!-- Start Modal -->
+    <div class="modal fade" id="CoinModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h3 class="modal-title" id="exampleModalLongTitle">Selected Coins</h3>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="row" id="ModalCoins">
         
-        <div id="CoinPage" class="row"></div>
-        
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+        </div>
+    </div>
+    </div>
+<!--End Modal-->
 <script>
 var HomeCoins = []
 var baseUrl = 'https://api.coingecko.com/api/v3/coins'
 var SearchCoins = []
 var SavedCoins = []
-callajax(printCoins, 0)
+var CoinsChecked = 0
+callajax(printCoins, 0)  
 function callajax(_function,id=0) {   /**Main ajax**/
     let url
     if (id == 0) {
@@ -131,32 +210,226 @@ function callajax(_function,id=0) {   /**Main ajax**/
         error: function (error) {
         console.log('error : ', error)
         },
-    })
-}
-function printCoins(data){
+    }) }
+function printCoins(data){  //Print all coins as well as info on collapse
+    CoinPage.innerHTML = ''
     HomeCoins = data
-    HomeCoins.map((coin) => {
-    let str = `
-<div class="card col-4">
-    <img class="card-img-top" src="${coin.image.large}" alt="Card image cap">
+    for(i=0; i<HomeCoins.length;i++){
+    HomeCoins[i].checked = false;
+    IdName  = "CardCollapse" + i
+    CoinPage.innerHTML += `
+<div class="card col-12 col-sm-4">
+    <label class="switch">  z
+            <input type="checkbox" id="myCheckbox" onchange="CheckChange(${i})">
+            <span class="slider round"></span>
+        </label>
+    <img class="card-img-top" src="${HomeCoins[i].image.large}" alt="Card image cap">
         <div class="card-body">
-        <h5 class="card-title">${coin.name}</h5>
-        <button class="btn" type="button" onClick="CoinClicked(${coin.id})" data-toggle="collapse" data-target="#CardCollapse" aria-expanded="false" aria-controls="collapseExample">
+        <h5 class="card-title">${HomeCoins[i].name}</h5>
+        <button class="btn" type="button" data-toggle="collapse" data-target="#${IdName}" aria-expanded="false" aria-controls="collapseExample">
         More Info </button>
-            <div class="collapse" id="CardCollapse"></div>
-            <div class="Card card-body"></div>
-        </div>
+    <div class="collapse" id="${IdName}">
+        <div class="CardInfo" >
+        <img class="card-img-bottom" src="${HomeCoins[i].image.large}" alt="Card image cap">
+        <p class="CoinName"> ${HomeCoins[i].name} </p><br/>
+        <div class="Value"> USD: ${HomeCoins[i].market_data.current_price.usd}$</div>
+        <div class="Value"> EUR: ${HomeCoins[i].market_data.current_price.eur}€</div>
+        <div class="Value"> ILS: ${HomeCoins[i].market_data.current_price.ils}₪</div>
+    </div>
+</div>
 </div>`
-    CoinPage.innerHTML += str
-})
-console.log(data)
+    }
+    document.getElementById("loader").style.display = "none";
+    console.log(data) }
+function CheckChange(i) {
+    if (HomeCoins[i].checked == false){
+        if(SavedCoins.length < 5){
+        HomeCoins[i].checked = true;
+        SavedCoins.push(HomeCoins[i])
+        console.log(SavedCoins)
+        }
+        else{
+        console.log("Too many")
+        console.log(SavedCoins)
+        // $('#exampleModalCenter').modal()
+        }
+    }
+    else{
+    console.log("Already checked")
+    HomeCoins[i].checked = false;
+    SavedCoins.splice(i,1)
+    console.log(SavedCoins)
+    }
 }
-function PrintSearchCoin(input){
-    console.log(input)
-    let FindCoin = HomeCoins.find(NewCoin =>{
+function ModalCoinsPrint(){   // Modal
+    ModalCoins.innerHTML = ''
+    for(i=0;i<SavedCoins.length;i++)
+    ModalCoins.innerHTML +=  `
+    <div class="card col-12 col-sm-4">
+    <label class="switch">  z
+            <input type="checkbox" id="myCheckbox" onchange="CheckChange(${i})">
+            <span class="slider round"></span>
+        </label>
+    <img class="card-img-top" src="${SavedCoins[i].image.large}" alt="Card image cap">
+        <div class="card-body">
+        <h5 class="card-title">${SavedCoins[i].name}</h5>
+        <button class="btn" type="button" data-toggle="collapse" data-target="#${IdName}" aria-expanded="false" aria-controls="collapseExample">
+        More Info </button>
+    <div class="collapse" id="${IdName}">
+        <div class="CardInfo" >
+        <img class="card-img-bottom" src="${SavedCoins[i].image.large}" alt="Card image cap">
+        <p class="CoinName"> ${SavedCoins[i].name} </p><br/>
+        <div class="Value"> USD: ${SavedCoins[i].market_data.current_price.usd}$</div>
+        <div class="Value"> EUR: ${SavedCoins[i].market_data.current_price.eur}€</div>
+        <div class="Value"> ILS: ${SavedCoins[i].market_data.current_price.ils}₪</div>
+    </div>
+</div>
+</div>
+`
+}
+function PrintSearchCoin(input){  //Print Search Input 
+    document.getElementById("loader").style.display = "inline-block";
+    if(input){
+        let FindCoin = HomeCoins.find(NewCoin =>{
         return NewCoin.id == input })
-    console.log(NewCoin)
+        console.log(FindCoin)
+        CoinPage.innerHTML = ''
+        CoinPage.innerHTML +=  `
+<div class="card col-4">
+    <label class="switch">
+            <input type="checkbox" onclick="AddToGraph(${FindCoin})">
+            <span class="slider round"></span>
+        </label>
+    <img class="card-img-top" src="${FindCoin.image.large}" alt="Card image cap">
+        <div class="card-body">
+        <h5 class="card-title">${FindCoin.name}</h5>
+        <button class="btn" type="button" data-toggle="collapse" data-target="#${IdName}" aria-expanded="false" aria-controls="collapseExample">
+        More Info </button>
+<div class="collapse" id="${IdName}">
+    <div class="CardInfo" >
+        <img class="card-img-bottom" src="${FindCoin.image.large}" alt="Card image cap">
+        <p class="CoinName"> ${FindCoin.name} </p><br/>
+        <div class="Value"> USD: ${FindCoin.market_data.current_price.usd}$</div>
+        <div class="Value"> EUR: ${FindCoin.market_data.current_price.eur}€</div>
+        <div class="Value"> ILS: ${FindCoin.market_data.current_price.ils}₪</div>
+    </div>
+</div>
+</div>`
+formEL.reset(); 
+document.getElementById("loader").style.display = "none"; }
+    else
+        HomeButton()
 }
-        </script>
+function HomeButton(){  // Home Page
+    document.getElementById("loader").style.display = "inline-block";
+    callajax(printCoins, 0)
+}
+function AboutClicked(){ // About Page
+    CoinPage.innerHTML = ''
+    CoinPage.innerHTML =`
+    <img class="AboutImg" src="images/selfie.jpg">
+    <h3 class="AboutPageText"> 
+        My name is Vitali and this my 2nd project for the FullStack course.
+        This project shows you current prices of all the main crypto currency.    
+    </h3>
+    `
+}
+function ReportsClicked(){  // Live Reports Page
+    document.getElementById("loader").style.display = "inline-block";
+CoinPage.innerHTML = `<div id="chartContainer" style="height: 370px; width: 100%;"></div>`
+window.onload = function () {
+
+var options = {
+	exportEnabled: true,
+	animationEnabled: true,
+	title:{
+		text: "Units Sold VS Profit"
+	},
+	subtitles: [{
+		text: "Click Legend to Hide or Unhide Data Series"
+	}],
+	axisX: {
+		title: "States"
+	},
+	axisY: {
+		title: "Units Sold",
+		titleFontColor: "#4F81BC",
+		lineColor: "#4F81BC",
+		labelFontColor: "#4F81BC",
+		tickColor: "#4F81BC"
+	},
+	axisY2: {
+		title: "Profit in USD",
+		titleFontColor: "#C0504E",
+		lineColor: "#C0504E",
+		labelFontColor: "#C0504E",
+		tickColor: "#C0504E"
+	},
+	toolTip: {
+		shared: true
+	},
+	legend: {
+		cursor: "pointer",
+		itemclick: toggleDataSeries
+	},
+	data: [{
+		type: "spline",
+		name: "Units Sold",
+		showInLegend: true,
+		xValueFormatString: "MMM YYYY",
+		yValueFormatString: "#,##0 Units",
+		dataPoints: [
+			{ x: new Date(2016, 0, 1),  y: 120 },
+			{ x: new Date(2016, 1, 1), y: 135 },
+			{ x: new Date(2016, 2, 1), y: 144 },
+			{ x: new Date(2016, 3, 1),  y: 103 },
+			{ x: new Date(2016, 4, 1),  y: 93 },
+			{ x: new Date(2016, 5, 1),  y: 129 },
+			{ x: new Date(2016, 6, 1), y: 143 },
+			{ x: new Date(2016, 7, 1), y: 156 },
+			{ x: new Date(2016, 8, 1),  y: 122 },
+			{ x: new Date(2016, 9, 1),  y: 106 },
+			{ x: new Date(2016, 10, 1),  y: 137 },
+			{ x: new Date(2016, 11, 1), y: 142 }
+		]
+	},
+	{
+		type: "spline",
+		name: "Profit",
+		axisYType: "secondary",
+		showInLegend: true,
+		xValueFormatString: "MMM YYYY",
+		yValueFormatString: "$#,##0.#",
+		dataPoints: [
+			{ x: new Date(2016, 0, 1),  y: 19034.5 },
+			{ x: new Date(2016, 1, 1), y: 20015 },
+			{ x: new Date(2016, 2, 1), y: 27342 },
+			{ x: new Date(2016, 3, 1),  y: 20088 },
+			{ x: new Date(2016, 4, 1),  y: 20234 },
+			{ x: new Date(2016, 5, 1),  y: 29034 },
+			{ x: new Date(2016, 6, 1), y: 30487 },
+			{ x: new Date(2016, 7, 1), y: 32523 },
+			{ x: new Date(2016, 8, 1),  y: 20234 },
+			{ x: new Date(2016, 9, 1),  y: 27234 },
+			{ x: new Date(2016, 10, 1),  y: 33548 },
+			{ x: new Date(2016, 11, 1), y: 32534 }
+		]
+	}]
+};
+$("#chartContainer").CanvasJSChart(options);
+
+function toggleDataSeries(e) {
+	if (typeof (e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+		e.dataSeries.visible = false;
+	} else {
+		e.dataSeries.visible = true;
+	}
+	e.chart.render();
+}
+
+}
+document.getElementById("loader").style.display = "hidden";
+}
+</script>
 </body>
 </html>
