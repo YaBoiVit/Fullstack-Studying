@@ -1,0 +1,185 @@
+.TitleDV {
+    border-bottom: 2px solid goldenrod;
+    margin-bottom: 10px;
+    padding: 5px;
+    }
+    .TitleDV h1 {
+    position: relative;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    color: white;
+    }
+    #logo {
+    float: left;
+    width: 50px;
+    }
+    .MainPage {
+    background-image: url("images/background.jpg");
+    height: 100%;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    }
+    .navbar {
+    margin-bottom: 10px;
+    background-color: rgba(18, 17, 17, 0.859) ;
+    margin-inline: 10%;
+    }
+    #CoinPage{
+    margin-inline: 10%;
+    }
+    .card-img-top {
+    width: 50px;
+    padding-top: 2%;
+    margin-left: 43%;
+    }
+    .card-img-top-modal{
+    width: 50px;
+    padding-top: 2%;
+    }
+    .card {
+    background-color: rgba(18, 17, 17, 0.859);
+    color: white;
+    text-align: center;
+    margin-bottom: 10px;
+    }
+    .CardModal{
+    background-color: rgba(18, 17, 17, 0.859);
+    color: white;
+    text-align: center;
+    }
+    .btn {
+    color:white;
+    border-color: #ffc942;
+    margin-top: 5px;
+    }
+
+    .btn:hover {
+    color: #ffc942;
+    }
+    .SearchBox {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    }
+    .chartstyle {
+    display: inline-block;
+    width: 100%;
+    height: 500px;
+    z-index: 20;
+    }
+    #chartContainer {
+    display: inline-block;
+    text-align: center;
+    margin-top: 10%;
+    size: 90%;
+    z-index: 1000;
+    }
+    .card-img-bottom {
+    width: 40px;
+    padding-top: 2px;
+    float: left;
+    }
+    .CoinName {
+    padding-top: 10px;
+    margin-right: 35px;
+    }
+    .Value {
+    text-align: left;
+    }
+    .AboutPageText {
+    color: white;
+    text-shadow: 2px 2px 4px #000000;
+    text-align: center;
+    }
+    .AboutImg {
+    width: 200px;
+    margin: auto;
+    }
+    .loader {
+    display: inline-block;
+    width: 150px;
+    height: 150px;
+    margin-inline: 43%;
+    }
+    .loader:after {
+    content: " ";
+    display: block;
+    width: 150px;
+    height: 150px;
+    margin: 8px;
+    border-radius: 50%;
+    border: 6px solid #fff;
+    border-color: #fff transparent #fff transparent;
+    animation: lds-dual-ring 1.2s linear infinite;
+    }
+    @keyframes lds-dual-ring {
+    0% {
+    transform: rotate(0deg);
+    }
+    100% {
+    transform: rotate(360deg);
+    }
+    }
+    .switchModal{
+        margin-top: 5px;
+        position: relative;
+        display: block;
+        width: 64px;
+        height: 30px;
+        margin-left: 10px;
+    }
+    .switch {
+        margin-top: 5px;
+        position: relative;
+        display: block;
+        width: 64px;
+        height: 30px;
+    }
+      /* Hide default HTML checkbox */
+    .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+      /* The slider */
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgb(99, 97, 97);
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+    .slider:before {
+        position: absolute;
+        content: "";
+        height: 23px;
+        width: 23px;
+        left: 4px;
+        bottom: 4px;
+        background-color: rgb(243, 181, 11);
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+    input:checked + .slider {
+        background-color: goldenrod;
+    }
+    input:focus + .slider {
+        -webkit-box-shadow: 0 0 1px goldenrod;
+        box-shadow: 0 0 1px goldenrod;
+    }
+    input:checked + .slider:before {
+        -webkit-transform: translateX(26px);
+        transform: translateX(26px);
+    }
+      /* Rounded sliders */
+    .slider.round {
+        border-radius: 34px;
+    }
+    .slider.round:before {
+        border-radius: 50%;
+    }

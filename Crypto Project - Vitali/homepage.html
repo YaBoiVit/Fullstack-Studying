@@ -20,126 +20,11 @@
     <script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
     <script src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
     <title>Crypto Project</title>
-    <link rel="stylesheet" type="text/css" href="switch.css">
-    <style>
-    .TitleDV {
-    border-bottom: 2px solid white;
-    margin-bottom: 10px;
-    padding: 5px;
-    }
-    .TitleDV h1 {
-    position: relative;
-    margin-top: 8px;
-    margin-bottom: 8px;
-    color: white;
-    }
-    #logo {
-    float: left;
-    width: 50px;
-    }
-    .MainPage {
-    background-image: url("images/background.jpg");
-    height: 100%;
-    background-attachment: fixed;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    }
-    .navbar {
-    margin-bottom: 10px;
-    background-color: rgba(18, 17, 17, 0.859) ;
-    margin-inline: 10%;
-    }
-    #CoinPage{
-    margin-inline: 10%;
-    }
-    .card-img-top {
-    width: 50px;
-    padding-top: 2%;
-    margin-left: 43%;
-    }
-    .card {
-    background-color: rgba(18, 17, 17, 0.859);
-    color: white;
-    text-align: center;
-    margin-bottom: 10px;
-    }
-    .btn {
-    color:white;
-    border-color: #ffc942;
-    margin-top: 5px;
-    }
-    .btn:hover {
-    color: #ffc942;
-    }
-    .SearchBox {
-    float: right;;
-    padding: 5px;
-    }
-    .chartstyle {
-    display: inline-block;
-    width: 100%;
-    height: 500px;
-    z-index: 20;
-    }
-    #chartContainer {
-    display: inline-block;
-    text-align: center;
-    margin-top: 10%;
-    size: 90%;
-    z-index: 20;
-    }
-    .card-img-bottom {
-    width: 40px;
-    padding-top: 2px;
-    float: left;
-    }
-    .CoinName {
-    padding-top: 10px;
-    margin-right: 35px;
-    }
-    .Value {
-    text-align: left;
-    }
-    .AboutPageText {
-    color: white;
-    text-shadow: 2px 2px 4px #000000;
-    text-align: center;
-    }
-    .AboutImg {
-    width: 200px;
-    margin: auto;
-    }
-    .loader {
-    display: inline-block;
-    width: 150px;
-    height: 150px;
-    margin-inline: 43%;
-    }
-    .loader:after {
-    content: " ";
-    display: block;
-    width: 150px;
-    height: 150px;
-    margin: 8px;
-    border-radius: 50%;
-    border: 6px solid #fff;
-    border-color: #fff transparent #fff transparent;
-    animation: lds-dual-ring 1.2s linear infinite;
-    }
-    @keyframes lds-dual-ring {
-    0% {
-    transform: rotate(0deg);
-    }
-    100% {
-    transform: rotate(360deg);
-    }
-    }
-    </style>
+    <link rel="stylesheet" type="text/css" href="maincss.css">
 </head>
 
 <!-- Things To Do: -->
-<!-- Live Graph [Wont show], Toggle Check[Cant send object] , Modal -->
+<!-- Live Graph [Wont show] , Modal[Add rest] -->
 
 <body class="MainPage">
     <div class="TitleDV"> 
@@ -171,7 +56,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
         <div class="modal-header">
-            <h3 class="modal-title" id="exampleModalLongTitle">Selected Coins</h3>
+            <h4 class="modal-title" id="exampleModalLongTitle"> You can only select 5 coins. Please remove one.</h4>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
             </button>
@@ -180,7 +65,7 @@
         
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="ModalClose()">Dont Change</button>
         </div>
         </div>
     </div>
@@ -192,8 +77,9 @@ var baseUrl = 'https://api.coingecko.com/api/v3/coins'
 var SearchCoins = []
 var SavedCoins = []
 var CoinsChecked = 0
+var ExtraCoin = []
 callajax(printCoins, 0)  
-function callajax(_function,id=0) {   /**Main ajax**/
+function callajax(_function,id=0) {   /**Main ajax**/  // READY
     let url
     if (id == 0) {
     url = baseUrl
@@ -211,7 +97,7 @@ function callajax(_function,id=0) {   /**Main ajax**/
         console.log('error : ', error)
         },
     }) }
-function printCoins(data){  //Print all coins as well as info on collapse
+function printCoins(data){  //Print all coins as well as info on collapse  // READY
     CoinPage.innerHTML = ''
     HomeCoins = data
     for(i=0; i<HomeCoins.length;i++){
@@ -241,7 +127,7 @@ function printCoins(data){  //Print all coins as well as info on collapse
     }
     document.getElementById("loader").style.display = "none";
     console.log(data) }
-function CheckChange(i) {
+function CheckChange(i) {  //Checks toggle switch input  //READY
     if (HomeCoins[i].checked == false){
         if(SavedCoins.length < 5){
         HomeCoins[i].checked = true;
@@ -249,55 +135,101 @@ function CheckChange(i) {
         console.log(SavedCoins)
         }
         else{
+        ExtraCoin = HomeCoins[i]
         console.log("Too many")
         console.log(SavedCoins)
-        // $('#exampleModalCenter').modal()
+        $(document).ready(function() {
+            $('#CoinModal').modal("show")
+        })
         }
     }
     else{
-    console.log("Already checked")
+    console.log("Coin Removed")
     HomeCoins[i].checked = false;
     SavedCoins.splice(i,1)
     console.log(SavedCoins)
     }
 }
-function ModalCoinsPrint(){   // Modal
+function ModalChange(i){  //Toggle switch change on Modal // READY
+    console.log("Already checked")
+    SavedCoins[i].checked = false;
+    SavedCoins.splice(i,1)
+    SavedCoins.push(ExtraCoin)
+    ExtraCoin.checked = true
+    $(document).ready(function() {
+            $('#CoinModal').modal("hidden")
+        })
+    console.log(SavedCoins)
+    HomeButton()
+}
+function SearchChange(){  // Toggle switch change on searched coin // READY
+    let FindCoin = HomeCoins.find(NewCoin =>{   // SearchCoins = On display coin , // FindCoin = Coin found from HomeCoins[]
+    return NewCoin.id == SearchCoins.id }) 
+    console.log(SearchCoins)
+    console.log(FindCoin)
+    if (SearchCoins.checked == false){
+        if(SavedCoins.length < 5){
+        SearchCoins.checked = true;
+        SavedCoins.push(SearchCoins)
+        console.log("false enter :",SavedCoins)
+        }
+        else{
+        console.log("Too many")
+        console.log(SavedCoins)
+        $(document).ready(function() {
+            $('#CoinModal').modal("show ")
+        })
+        }
+    }
+    else{
+    console.log("Already checked")
+    SearchCoins.checked = false;
+    SavedCoins.splice(FindCoin.id,1)
+    console.log(SavedCoins)
+    }
+}
+function ModalCoinsPrint(){  // Modal - ModalChange needs a function //  [Ugly, modal "show" & modal "hide" dont work]   // Ready manually
+    console.log(SavedCoins)
     ModalCoins.innerHTML = ''
-    for(i=0;i<SavedCoins.length;i++)
+    for(i=0;i<SavedCoins.length;i++) {
+    IdName  = "CardCollapseModal" + i
     ModalCoins.innerHTML +=  `
-    <div class="card col-12 col-sm-4">
-    <label class="switch">  z
-            <input type="checkbox" id="myCheckbox" onchange="CheckChange(${i})">
+    <div class="CardModal col-4">
+    <label class="switchModal">
+            <input type="checkbox" id="myCheckbox" checked onclick="ModalChange(${i})">
             <span class="slider round"></span>
         </label>
-    <img class="card-img-top" src="${SavedCoins[i].image.large}" alt="Card image cap">
+    <img class="card-img-top-modal" src="${SavedCoins[i].image.large}">
         <div class="card-body">
         <h5 class="card-title">${SavedCoins[i].name}</h5>
         <button class="btn" type="button" data-toggle="collapse" data-target="#${IdName}" aria-expanded="false" aria-controls="collapseExample">
         More Info </button>
-    <div class="collapse" id="${IdName}">
-        <div class="CardInfo" >
-        <img class="card-img-bottom" src="${SavedCoins[i].image.large}" alt="Card image cap">
+<div class="collapse" id="${IdName}">
+    <div class="CardInfo" >
+        <img class="card-img-bottom" src="${SavedCoins[i].image.large}">
         <p class="CoinName"> ${SavedCoins[i].name} </p><br/>
         <div class="Value"> USD: ${SavedCoins[i].market_data.current_price.usd}$</div>
         <div class="Value"> EUR: ${SavedCoins[i].market_data.current_price.eur}€</div>
         <div class="Value"> ILS: ${SavedCoins[i].market_data.current_price.ils}₪</div>
     </div>
 </div>
-</div>
-`
+</div>`
+    }
 }
-function PrintSearchCoin(input){  //Print Search Input 
+function PrintSearchCoin(input){  //Print Search Input  // READY  
+    
     document.getElementById("loader").style.display = "inline-block";
-    if(input){
+        IdName  = "CardCollapse"
         let FindCoin = HomeCoins.find(NewCoin =>{
         return NewCoin.id == input })
-        console.log(FindCoin)
+        SearchCoins = FindCoin 
+        if (FindCoin) {
+        if(FindCoin.checked == true) {
         CoinPage.innerHTML = ''
         CoinPage.innerHTML +=  `
 <div class="card col-4">
     <label class="switch">
-            <input type="checkbox" onclick="AddToGraph(${FindCoin})">
+            <input type="checkbox" id="myCheckbox" checked onclick="SearchChange()">
             <span class="slider round"></span>
         </label>
     <img class="card-img-top" src="${FindCoin.image.large}" alt="Card image cap">
@@ -315,16 +247,93 @@ function PrintSearchCoin(input){  //Print Search Input
     </div>
 </div>
 </div>`
+}
+else{
+        CoinPage.innerHTML = ''
+        CoinPage.innerHTML +=  `
+<div class="card col-4">
+    <label class="switch">
+            <input type="checkbox" id="myCheckbox" onclick="SearchChange()">
+            <span class="slider round"></span>
+        </label>
+    <img class="card-img-top" src="${FindCoin.image.large}" alt="Card image cap">
+        <div class="card-body">
+        <h5 class="card-title">${FindCoin.name}</h5>
+        <button class="btn" type="button" data-toggle="collapse" data-target="#${IdName}" aria-expanded="false" aria-controls="collapseExample">
+        More Info </button>
+<div class="collapse" id="${IdName}">
+    <div class="CardInfo" >
+        <img class="card-img-bottom" src="${FindCoin.image.large}" alt="Card image cap">
+        <p class="CoinName"> ${FindCoin.name} </p><br/>
+        <div class="Value"> USD: ${FindCoin.market_data.current_price.usd}$</div>
+        <div class="Value"> EUR: ${FindCoin.market_data.current_price.eur}€</div>
+        <div class="Value"> ILS: ${FindCoin.market_data.current_price.ils}₪</div>
+    </div>
+</div>
+</div>`
+}
 formEL.reset(); 
-document.getElementById("loader").style.display = "none"; }
-    else
-        HomeButton()
+document.getElementById("loader").style.display = "none"; 
 }
-function HomeButton(){  // Home Page
-    document.getElementById("loader").style.display = "inline-block";
-    callajax(printCoins, 0)
+    else if (input){
+    alert("Cannot find coin")
+    formEL.reset()
+    HomeButton() 
 }
-function AboutClicked(){ // About Page
+    else HomeButton()
+}
+function HomeButton(){  // Home Page  // READY
+    CoinPage.innerHTML = ''
+    for(i=0; i<HomeCoins.length;i++){
+    IdName  = "CardCollapse" + i
+    if(HomeCoins[i].checked == true) {
+    CoinPage.innerHTML += `
+<div class="card col-12 col-sm-4">
+    <label class="switch">  z
+            <input type="checkbox" id="myCheckbox" checked onchange="CheckChange(${i})">
+            <span class="slider round"></span>
+        </label>
+    <img class="card-img-top" src="${HomeCoins[i].image.large}" alt="Card image cap">
+        <div class="card-body">
+        <h5 class="card-title">${HomeCoins[i].name}</h5>
+        <button class="btn" type="button" data-toggle="collapse" data-target="#${IdName}" aria-expanded="false" aria-controls="collapseExample">
+        More Info </button>
+    <div class="collapse" id="${IdName}">
+        <div class="CardInfo" >
+        <img class="card-img-bottom" src="${HomeCoins[i].image.large}" alt="Card image cap">
+        <p class="CoinName"> ${HomeCoins[i].name} </p><br/>
+        <div class="Value"> USD: ${HomeCoins[i].market_data.current_price.usd}$</div>
+        <div class="Value"> EUR: ${HomeCoins[i].market_data.current_price.eur}€</div>
+        <div class="Value"> ILS: ${HomeCoins[i].market_data.current_price.ils}₪</div>
+    </div>
+</div>
+</div>`
+    }
+    else{
+        CoinPage.innerHTML += `
+<div class="card col-12 col-sm-4">
+    <label class="switch">  z
+            <input type="checkbox" id="myCheckbox" onchange="CheckChange(${i})">
+            <span class="slider round"></span>
+        </label>
+    <img class="card-img-top" src="${HomeCoins[i].image.large}" alt="Card image cap">
+        <div class="card-body">
+        <h5 class="card-title">${HomeCoins[i].name}</h5>
+        <button class="btn" type="button" data-toggle="collapse" data-target="#${IdName}" aria-expanded="false" aria-controls="collapseExample">
+        More Info </button>
+    <div class="collapse" id="${IdName}">
+        <div class="CardInfo" >
+        <img class="card-img-bottom" src="${HomeCoins[i].image.large}" alt="Card image cap">
+        <p class="CoinName"> ${HomeCoins[i].name} </p><br/>
+        <div class="Value"> USD: ${HomeCoins[i].market_data.current_price.usd}$</div>
+        <div class="Value"> EUR: ${HomeCoins[i].market_data.current_price.eur}€</div>
+        <div class="Value"> ILS: ${HomeCoins[i].market_data.current_price.ils}₪</div>
+    </div>
+</div>
+</div>`
+    }}
+    document.getElementById("loader").style.display = "none"; }
+function AboutClicked(){ // About Page  // READY
     CoinPage.innerHTML = ''
     CoinPage.innerHTML =`
     <img class="AboutImg" src="images/selfie.jpg">
@@ -334,7 +343,7 @@ function AboutClicked(){ // About Page
     </h3>
     `
 }
-function ReportsClicked(){  // Live Reports Page
+function ReportsClicked(){  // Live Reports Page  // [NOT SHOWING]
     document.getElementById("loader").style.display = "inline-block";
 CoinPage.innerHTML = `<div id="chartContainer" style="height: 370px; width: 100%;"></div>`
 window.onload = function () {

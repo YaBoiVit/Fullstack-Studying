@@ -208,11 +208,11 @@
 
 // exercise
 
-let FilterFunc = (titleStartWidth, bodyEndWidth, id) => {
-    let arr = posts.filter(p=>{
-        return p.title.startsWith(titleStartWidth) || p.body.endsWith(bodyEndWidth) || p.id == id
-    })
-    return arr;
-}
-let filterResult = FilterFunc('a','b')
-console.log(filterResult)
+// let FilterFunc = (titleStartWidth, bodyEndWidth, id) => {
+//     let arr = posts.filter(p=>{
+//         return p.title.startsWith(titleStartWidth) || p.body.endsWith(bodyEndWidth) || p.id == id
+//     })
+//     return arr;
+// }
+// let filterResult = FilterFunc('a','b')
+// console.log(filterResult)
