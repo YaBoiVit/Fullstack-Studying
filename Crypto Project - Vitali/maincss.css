@@ -71,7 +71,6 @@
     #chartContainer {
     display: inline-block;
     text-align: center;
-    margin-top: 10%;
     size: 90%;
     z-index: 1000;
     }
