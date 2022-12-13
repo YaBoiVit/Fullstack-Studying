@@ -57,7 +57,6 @@ font-size: 100%;
 .stickynote:last-of-type{
 animation: fadein 1s;
 }
-/* Check online to use CSS in JS */
 .stickytask{
 max-width: 150px;
 height: 120px;

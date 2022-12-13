@@ -27,7 +27,6 @@
             <div class="form-group">
                 <label>Enter your task:</label>
                 <textarea class="form-control" style="background-image: url(img/formbg.jpg) ; bottom:15px" id="TextDV" rows="6"></textarea>
-                <!-- Increase the text size to fit properly -->
             </div>
             <div class="form-group">
             <button style="margin-top:5px" type="button" class="btn btn-success" onclick="SaveTextArea()">Save</button>
@@ -66,7 +65,7 @@
             notesRow.innerHTML = ''
             for (var i = 0; i < Saved.length; i++) {
             var postnotes = `<div class="stickynote col-1">
-                <button type="button" class="btn-close" onclick="CloseNote(${i})"aria-label="Close"></button>
+            <button type="button" class="btn-close" onclick="CloseNote(${i})"aria-label="Close"></button>
             <p class="stickytask"> ${Saved[i].Task} </p>
             <p class="stickydate"> ${Saved[i].Date} </p><br/>
             <p class="stickytime"> ${Saved[i].Time} </p>

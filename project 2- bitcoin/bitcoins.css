@@ -1,0 +1,127 @@
+html, body
+{
+    margin: 0px;
+    height: 100%;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+}
+
+.mainPage
+{
+    padding-left: 30px;
+    background-image: url(mainPage.jpg);
+    text-align: left;
+    width: 100%;
+    height: 750px;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.title
+{
+    font-family: 'Amatic SC', cursive;
+    font-size: 100px;
+    padding-top: 10px;
+    color: white;
+    -webkit-text-fill-color: white;
+    text-shadow: -5px -5px 15px black;
+    font-weight: normal;
+    animation: fadeIn 2.5s;
+}
+
+.animatedButtonsDiv
+{
+    margin-top: 100px;
+    margin-left: 50px;
+    overflow: hidden; /*this cubes div is a unique line, the next line will start under this div*/
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    width: 400px;
+    height: 100px;
+    animation: fadeIn 2.5s;
+}
+
+@keyframes fadeIn
+{
+    0% 
+    { 
+        opacity: 0; 
+    }
+
+    100% 
+    { 
+        opacity: 1; 
+    }
+}
+
+button
+{
+    width: 100px;
+    border: none;
+    background: none;
+    font-size: 50px;
+}
+
+
+
+.verticalLine
+{
+    padding: 5px;
+    margin-left: 5px;
+    border-left: 1px solid white;
+    height: 100px;
+}
+
+.Bitcoins
+{
+    background-image: url(bitcoinsOptions.jpeg);
+    text-align: center;
+    width: 100%;
+    height: 1200px;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+.About
+{
+    background-image: url(img3.jpeg);
+    text-align: center;
+    width: 100%;
+    height: 750px;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+.Graphs
+{
+    background-image: url(graphsIMG.jpg);
+    text-align: center;
+    width: 100%;
+    height: 800px;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+.bitcoinsTitle
+{
+    font-family: 'Amatic SC', cursive;
+    font-size: 50px;
+    margin: auto;
+    width: 50%;
+    padding: 10px;
+    color: white;
+    text-decoration: underline;
+}
+
