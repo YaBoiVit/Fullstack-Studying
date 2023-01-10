@@ -1,57 +1,18 @@
 const initialState = {
-    num:15,
-    users:[],
-    favorites:[],
+    shows:[]
 };
 
 
 function rootReducer(state = initialState, action) {
     switch (action.type) {
-        case 'ChangeNumber' :
-            state = { ...state, num: action.payload }
-            break;
-        case 'AddUser':
-            let users = [...state.users];
-            users.push(action.payload)
-            state = {...state, users: users}
-            break;
-        case 'DeleteUser':
-            let users1 = [...state.users];
-            users1.splice(action.payload,1)
-            state = {...state, users: users1}
-            break;
-        case 'SaveUser':
-            let favorites = [...state.favorites]
-            favorites.push(action.payload)
-            state = {...state, favorites}
+        case 'UpdateShowsArray' :
+            state = {...state, shows: action.payload}
             break;
     }
     return state;
 }
 
 export default rootReducer;
-
-
-        // case 'ChangeColor':
-        //     state = { ...state, color: action.payload }
-        //     break;
-        // case 'ChangeNumber':
-        //     let num= state.number
-        //     if (action.payload == 1){
-        //         num+=1
-        //         state = { ...state, color: "Red" }
-        //     }
-        //     if (action.payload == 0){
-        //         num=0
-        //         state = { ...state, color: "Green" }
-        //     }
-        //     if (action.payload == -1){
-        //         num-=1
-        //         state = { ...state, color: "Blue" }
-        //     }
-        //     state = { ...state, number: num }
-        //     break;
-
 
 
 

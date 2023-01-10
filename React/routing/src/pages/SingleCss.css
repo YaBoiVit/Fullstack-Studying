@@ -1,0 +1,6 @@
+.card-single{
+    border: 3px solid black;
+    margin-top: 10px;
+    padding: 10px;
+    cursor: pointer;
+}   

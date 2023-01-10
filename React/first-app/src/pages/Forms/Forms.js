@@ -12,7 +12,6 @@ class Forms extends Component {
     }
     onChangeFn(e) {
         e.target.id == "email" ?  this.setState({ email: e.target.value}) : this.setState({ password: e.target.value})
-        
     }
     showResult(){
         let user = {

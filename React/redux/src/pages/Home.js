@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import './Cubes.css'
+import Numbers from './Numbers';
 
 class Home extends Component {
     
@@ -13,6 +14,7 @@ class Home extends Component {
                 <div className='col-1 cube green'onClick={()=>this.props.ChangeColorInReducer('Green')}></div>
                 <div className='col-1 cube blue'onClick={()=>this.props.ChangeColorInReducer('Blue')}></div>
             </div>
+            <Numbers/>
         </div>
         );
     }
@@ -20,6 +22,7 @@ class Home extends Component {
 const mapStateToProps = (state) => {
     return {
         color: state.color,
+        num: state.number,
     }
 }
 const mapDispatchToProps = (dispatch) =>{
