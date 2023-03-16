@@ -14,9 +14,15 @@ const [MyName, setMyName] = useState('abc');
         console.log(Users)
     }, [Users]);
 const getUsers = async()=>{
-    const res = await axios.get('https://jsonplaceholder.typicode.com/users')
-    setUsers(res.data)
+    const res = await axios.get('http://localhost:5000/users')
+    setUsers(res.data.users)
 }
+
+
+// const getUsers = async()=>{
+//     const res = await axios.get('https://jsonplaceholder.typicode.com/users')
+//     setUsers(res.data)
+// }
 
 return (
     <div>
@@ -24,7 +30,11 @@ return (
         <button type='button' className='btn btn-primary' onClick={()=>setMyName('newname')}>Change my Name</button>
         <div>
             {Num}<hr/>
-            {MyName}
+            {MyName}<hr/>
+            {Users.map((user,i)=>
+            <div key={i}>
+                {user.name}
+            </div>)}
         </div>
     </div>
 )
