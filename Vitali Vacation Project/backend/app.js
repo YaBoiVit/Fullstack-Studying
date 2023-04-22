@@ -5,11 +5,12 @@ const cors = require('cors')
 app.use(cors())
 app.use(express.json())
 
-const UsersRoutes = require('./routes/UsersRoute');
-app.use(UsersRoutes);
+const UsersRoute = require('./routes/UsersRoute');
+app.use(UsersRoute);
 
-const TasksRoutes = require('./routes/TasksRoute');
-app.use(TasksRoutes);
+const VacationRoute = require('./routes/VacationRoute');
+app.use(VacationRoute);
+
 
 app.use((req, res) => {
     res.send('<h1>Page not found</h1>')
