@@ -26,7 +26,7 @@ const [Password, setPassword] = useState("")
     if(Firstname == "" || Lastname == "" || Email == "" || Password == "")
     alert("Please enter all the lines below")
     else{
-      users.map((user) => {
+      users.map((user) =>  {
         if(user.Email == Email){
           alert("Email already in use")
         }
@@ -34,11 +34,17 @@ const [Password, setPassword] = useState("")
         {
           SendUser()
         }
+      
 });
     }
   }
   const SendUser = async () =>{
-    
+    if(Email == "admin@gmail.com"){
+    let res = await GetRequest(`InsertUser?firstname=${Firstname}&lastname=${Lastname}&email=${Email}&password=${Password}&isadmin=${1}`)}
+    else{
+    let res = await GetRequest(`InsertUser?firstname=${Firstname}&lastname=${Lastname}&email=${Email}&password=${Password}&isadmin=${0}`)}
+    alert("Account Created Successfully")
+    getAllUsers()
   }
   
   return (

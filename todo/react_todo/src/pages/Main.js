@@ -60,7 +60,7 @@ function Main() {
         let deleteTask =  await GetRequest('DeleteTask?id='+taskID)
     }
 
-  return (
+return (
     <div className='container'>
         <div className='row p-5 text-right'>
             <div className='col-2'>
