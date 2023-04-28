@@ -22,35 +22,36 @@ const [Lastname, setLastname] = useState("")
 const [Email, setEmail] = useState("")
 const [Password, setPassword] = useState("")
 
-  const Checkdetails=()=>{
-    if(Firstname == "" || Lastname == "" || Email == "" || Password == "")
-    alert("Please enter all the lines below")
+const Checkdetails=()=>{
+  if(Firstname == "" || Lastname == "" || Email == "" || Password == ""){
+    alert("Please enter all the lines below") 
+    return }
     else{
-      users.map((user) =>  {
-        if(user.Email == Email){
+      if(Password.length<4){
+        alert("Password is too short") 
+        return } 
+      else{
+        for(var i=0;i<users.length;i++){
+        if(users[i].Email == Email){
           alert("Email already in use")
-        }
-        else
-        {
-          SendUser()
-        }
-      
-});
+          return; }
+      }};
     }
-  }
+      SendUser()
+}
   const SendUser = async () =>{
     if(Email == "admin@gmail.com"){
     let res = await GetRequest(`InsertUser?firstname=${Firstname}&lastname=${Lastname}&email=${Email}&password=${Password}&isadmin=${1}`)}
     else{
     let res = await GetRequest(`InsertUser?firstname=${Firstname}&lastname=${Lastname}&email=${Email}&password=${Password}&isadmin=${0}`)}
     alert("Account Created Successfully")
-    getAllUsers()
+    goTo("")
   }
   
   return (
     <div>
   <div className='formlines'>
-    <form>
+    <form className='formEL'>
     <p> Create Account: </p>
     <div className="mb-4">
         <input type="email" id="firstname" onChange={(e)=>setFirstname(e.target.value)} className="form-control" placeholder='First Name' />
@@ -64,7 +65,8 @@ const [Password, setPassword] = useState("")
     <div className="mb-4">
         <input type="password" id="password" onChange={(e)=>setPassword(e.target.value)} className="form-control" placeholder='Password' />
     </div>
-        <button type="button" onClick={() => Checkdetails()} className="btn btn-primary btn-block mb-4">Register</button>
+        <button type="button" onClick={() => Checkdetails()} className="btn btn-primary mr-1 mb-4">Register</button>
+        <button type="button" onClick={() => goTo("")} className="btn btn-primary ml-1 mb-4">Login</button>
     </form>
     </div>
     </div>

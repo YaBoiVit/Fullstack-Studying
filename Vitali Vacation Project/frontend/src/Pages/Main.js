@@ -6,8 +6,8 @@ import "./Maincss.css"
 
 function Main() {
 
-    const [username, setUsername] = useState("")
-    const [password, setPassword] = useState("")
+    const [Email, setEmail] = useState("")
+    const [Password, setPassword] = useState("")
     const navigate = useNavigate()
     const goTo = (des) => {
         navigate('/' + des)
@@ -29,6 +29,26 @@ function Main() {
         setvacations(vacations)
         console.log("vacations : " , vacations)
     }
+    const CheckLogin = () => {
+        if(Email == "" || Password == ""){
+        alert("Please enter your details fully")
+        return; }
+        else{
+            for(var i=0;i<users.length;i++){ 
+                if(users[i].Email == Email && users[i].Password == Password){
+                CheckAdmin(users[i])
+                return;
+                }
+            }
+        }
+        alert("No account found")
+    };
+    const CheckAdmin = (user) => {
+        if (user.IsAdmin == true)
+        goTo("adminpage")
+        else
+        goTo("uservacations")
+    }
 
 return (
 <div className='MainDV'>
@@ -36,12 +56,12 @@ return (
     <form>
     <p> Login </p>
     <div className="mb-4">
-        <input type="email" id="form2Example1" className="form-control" placeholder='Email' />
+        <input type="email" id="email" onChange={(e)=>setEmail(e.target.value)} className="form-control" placeholder='Email' />
     </div>
     <div className="mb-4">
-        <input type="password" id="form2Example2" className="form-control" placeholder='Password' />
+    <input type="password" id="password" onChange={(e)=>setPassword(e.target.value)} className="form-control" placeholder='Password' />
     </div>
-        <button type="button" onClick={() => goTo("login")} className="btn btn-primary btn-block mb-4">Sign in</button>
+        <button type="button" onClick={() => CheckLogin()} className="btn btn-primary btn-block mb-4">Sign in</button>
     <p> Don't have an account? <button type="button" onClick={() => goTo("register")} className="btn btn-primary">Register</button></p>
     </form>
     </div>
