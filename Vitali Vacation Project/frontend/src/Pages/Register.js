@@ -2,7 +2,7 @@ import React from 'react';
 import { GetRequest } from '../services/Api';
 import { useState , useEffect} from 'react';
 import { Route , BrowserRouter, Routes, useNavigate} from 'react-router-dom'
-
+import "./Maincss.css"
 function Register() {
   const navigate = useNavigate()
   const goTo = (des) => {
@@ -52,7 +52,7 @@ const Checkdetails=()=>{
     <div>
   <div className='formlines'>
     <form className='formEL'>
-    <p> Create Account: </p>
+    <p className='randomtext font-weight-bold'> Create Account: </p>
     <div className="mb-4">
         <input type="email" id="firstname" onChange={(e)=>setFirstname(e.target.value)} className="form-control" placeholder='First Name' />
     </div>

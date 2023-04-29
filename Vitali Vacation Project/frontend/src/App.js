@@ -2,7 +2,7 @@ import logo from './logo.svg';
 import { Route , BrowserRouter, Routes} from 'react-router-dom'
 import './App.css';
 import AdminEdit from './Pages/AdminEdit';
-import AdminVacations from './Pages/AdminVacations';
+import AdminAddVacation from './Pages/AdminAddVacation';
 import Main from './Pages/Main';
 import Register from './Pages/Register';
 import UserVacations from './Pages/UserVacations';
@@ -18,7 +18,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/uservacations" element={<UserVacations />} />
           <Route path="/adminedit" element={<AdminEdit />} />
-          <Route path="/adminvacations" element={<AdminVacations />} />
+          <Route path="/adminadd" element={<AdminAddVacation />} />
           <Route path="/adminpage" element={<AdminPage/>} />
       </Routes>
     </div>
