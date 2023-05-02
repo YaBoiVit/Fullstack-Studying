@@ -1,3 +1,4 @@
+// Ready
 import React from 'react';
 import { GetRequest } from '../services/Api';
 import { useState , useEffect} from 'react';
@@ -15,6 +16,7 @@ function Main() {
     }
     useEffect(() => {
         getAllUsers()
+        localStorage.setItem("loggeduser", JSON.stringify(null));
     }, []);
     const getAllUsers = async()=>{
         let users =  await GetRequest('GetAllUsers')

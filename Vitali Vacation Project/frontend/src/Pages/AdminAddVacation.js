@@ -1,8 +1,8 @@
+// Add Image Input Field
 import React from 'react';
 import { GetRequest } from '../services/Api';
 import { useState , useEffect} from 'react';
 import { Route , BrowserRouter, Routes, useNavigate} from 'react-router-dom'
-import Datepicker, { ReactDatePicker } from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import format from 'date-fns/format'
 
@@ -24,7 +24,12 @@ function AdminAddVacation() {
     navigate('/' + des)
     }
     useEffect(() => {
+      if(LoggedUser)
       getAllVacations()
+      else{
+        alert("You are not logged in")
+        goTo("")
+      }
   }, []);
   const getAllVacations = async()=>{
     let vacations =  await GetRequest('GetAllVacations')
@@ -35,7 +40,6 @@ function AdminAddVacation() {
 const CreateVacation = async () =>{
 let res = await GetRequest(`InsertVacation?destination=${Destination}&startDate=${StartDate}&endDate=${EndDate}&description=${Description}&price=${Price}&image=${Image}`)
 alert("Vacation created")
-goTo("adminpage")
 }
 const Checkdetails=()=>{
   if(Destination == "" || Description == "" || StartDate == null || EndDate == null || Price == 0 || Image == ""){
@@ -46,6 +50,7 @@ const Checkdetails=()=>{
         alert("Price is invalid") 
         return }} 
     CreateVacation()
+    document.getElementById("create-form").reset();
 }
   return (
     <div>
@@ -66,7 +71,7 @@ const Checkdetails=()=>{
 </div>
 </nav>
 <div className='VacCard'>
-<form className='formEL'>
+<form id='create-form'>
     <p className='randomtext font-weight-bold'> New Vacation: </p>
     <div className="mb-4">
         <input type="text" id="destination" onChange={(e)=>setDestination(e.target.value)} className="form-control" placeholder='Destination' />
@@ -75,10 +80,10 @@ const Checkdetails=()=>{
         <textarea className="form-control text-left" placeholder='Description' rows="3" onChange={(e)=>setDescription(e.target.value)}></textarea>
     </div>
     <div className="mb-4">
-        <input type='date' className='dates' min={new Date().toISOString().split("T")[0]} onChange={(e) => setStartDate(e.target.value)}></input>
+        <input type='date' onKeyDown={(e) => e.preventDefault()} className='dates' min={new Date().toISOString().split("T")[0]} onChange={(e) => setStartDate(e.target.value)}></input>
     </div>
     <div className="mb-4">
-        <input type='date' className='dates' min={StartDate} onChange={(e) => setEndDate(e.target.value)}></input>
+        <input type='date' onKeyDown={(e) => e.preventDefault()} className='dates' min={StartDate} onChange={(e) => setEndDate(e.target.value)}></input>
     </div>
     <div className="mb-4">
         <input type="number" id="price" onChange={(e)=>setPrice(e.target.value)} className="form-control" placeholder='Price' />
@@ -92,5 +97,7 @@ const Checkdetails=()=>{
   </div>
   )
 }
+
+// Img upload plugin , add to React & to Node seperately: Multer
 
 export default AdminAddVacation

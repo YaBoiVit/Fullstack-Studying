@@ -24,10 +24,29 @@
 .VacCard{
     margin-inline: 35%;
 }
-.card-text{
-    overflow: auto;
+.card-description{
+    overflow:auto;
+    height: 150px;
 }
 .card{
-min-width: 175px;
-height: 270px;
+    margin-inline:10%;
+    height: 450px;
+}
+.card-img{
+    width: 100%;
+    height:200px;
+}
+.form-check-input{
+    margin-left: 30%;
+}
+.card-dates{
+    font-size: large;
+}
+.likeicon{ 
+    cursor: pointer;
+    color: black;
+}
+.likeicon::after{
+    transform: color(red);
+    transition-duration: 0.5s;
 }

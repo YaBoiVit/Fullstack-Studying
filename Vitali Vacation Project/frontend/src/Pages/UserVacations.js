@@ -14,7 +14,12 @@ function UserVacations() {
     navigate('/' + des)
     }
     useEffect(() => {
+      if(LoggedUser)
       getAllVacations()
+      else{
+        alert("You are not logged in")
+        goTo("")
+      }
   }, []);
   const getAllVacations = async()=>{
     let vacations =  await GetRequest('GetAllVacations')
