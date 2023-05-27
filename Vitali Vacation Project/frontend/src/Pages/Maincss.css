@@ -1,4 +1,23 @@
-
+.MainDV{
+    text-align: center;
+    background-image: url("../img/newimg.jpg");
+    min-height: 100%;
+    min-width: 100%;
+    position:fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.MainDVScroll{
+    text-align: center;
+    background-image: url("../img/newimg.jpg");
+    min-height: 100%;
+    min-width: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover; 
+    overflow-x: hidden;
+}
 .formlines{
     margin-left: 40%;
     margin-right: 40%;
@@ -26,11 +45,11 @@
 }
 .card-description{
     overflow:auto;
-    height: 150px;
+    height: 160px;
 }
 .card{
     margin-inline:10%;
-    height: 450px;
+    height: 480px;
 }
 .card-img{
     width: 100%;
@@ -42,11 +61,77 @@
 .card-dates{
     font-size: large;
 }
-.likeicon{ 
+.Header{
+    color: white;
+    text-shadow: 2px 2px 5px black;
+    font-size: x-large;
     cursor: pointer;
-    color: black;
 }
-.likeicon::after{
-    transform: color(red);
-    transition-duration: 0.5s;
+.form-check-input{
+    width: 60px;
+
+}
+.check-text{
+    color: white;
+    text-shadow: 2px 2px 5px black;
+    font-size: large;
+}
+.GraphDV{
+    text-align: center;
+    width: 500px;
+}
+.BarText{
+    color: white;
+    text-shadow: 2px 2px 5px black;
+    font-size: large;
+}
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 25px;
+}
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 16px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+input:checked + .slider {
+    background-color: #2196F3;
+}
+input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+}
+input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+.slider.round {
+    border-radius: 25px;
+}
+.slider.round:before {
+    border-radius: 50%;
 }

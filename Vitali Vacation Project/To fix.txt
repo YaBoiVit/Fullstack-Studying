@@ -1,0 +1,7 @@
+AdminAddVacation.js = Ready
+AdminEdit.js = Image upload old one doesnt work, localhost error.
+AdminGraph.js = Ready
+AdminPage.js = Ready, fix AdminEdit
+Main.js = Ready
+Register.js = Ready
+UserVacations = Following & Filter Fix

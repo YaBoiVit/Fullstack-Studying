@@ -50,7 +50,7 @@ const Checkdetails=()=>{
   }
   
   return (
-    <div>
+    <div className='MainDV'>
   <div className='formlines'>
     <form className='formEL'>
     <p className='randomtext font-weight-bold'> Create Account: </p>

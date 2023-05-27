@@ -6,6 +6,7 @@ import Main from './Pages/Main';
 import Register from './Pages/Register';
 import UserVacations from './Pages/UserVacations';
 import AdminPage from './Pages/AdminPage';
+import AdminGraph from './Pages/AdminGraph';
 
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
           <Route path="/adminedit" element={<AdminEdit />} />
           <Route path="/adminadd" element={<AdminAddVacation />} />
           <Route path="/adminpage" element={<AdminPage/>} />
+          <Route path="/admingraph" element={<AdminGraph/>} />
       </Routes>
     </div>
     </BrowserRouter>

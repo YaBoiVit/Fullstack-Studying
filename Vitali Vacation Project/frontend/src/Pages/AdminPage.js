@@ -4,11 +4,12 @@ import { useState , useEffect} from 'react';
 import { Route , BrowserRouter, Routes, useNavigate} from 'react-router-dom'
 import "./Maincss.css"
 import format from 'date-fns/format'
-import { BsFillHeartFill } from "react-icons/bs";
+import Swal from 'sweetalert2';
 
 function AdminPage() {
   const navigate = useNavigate()
   const [vacations, setvacations] = useState([]);
+  const [GlobalImageUrl, setGlobalImageUrl] = useState('http://localhost:5000/public/images/');
   const [LoggedUser, setLoggedUser] = useState(() => {
     const saved = localStorage.getItem("loggeduser");
     const initialValue = JSON.parse(saved);
@@ -18,10 +19,10 @@ function AdminPage() {
     navigate('/' + des)
     }
     useEffect(() => {
-      if(LoggedUser)
+      if(LoggedUser && LoggedUser.IsAdmin == 1)
       getAllVacations()
       else{
-        alert("You are not logged in")
+        alert("You are not an administrator")
         goTo("")
       }
   }, []);
@@ -31,11 +32,45 @@ function AdminPage() {
     console.log("vacations : " , vacations)
     console.log("User:", LoggedUser)
 }
-  const LikeClicked = (vacation) => {
-    console.log(vacation)
+const Deletebtn = async(vacation) =>{
+  Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then(async(result) => {
+      if(result.isConfirmed){
+          let delvacation = await GetRequest(`deleteVacation?id=${vacation.VacationID}`);
+          console.log("DEL : " , delvacation,result)
+          if (delvacation.affectedRows == 1 ) {
+            getAllVacations(); 
+            Swal.fire(
+              'Deleted!',
+              'Your file has been deleted.',
+              'success'
+            )
+          }else {
+              Swal.fire(
+                  'Not Deleted!',
+                  'Your file has been not deleted. please try again !!',
+                  'error'
+                )
+          }
+      }
+    })
+
+  }
+
+  const Editbtn = (vacation) => {
+    console.log( "Edited: ",vacation)
+    localStorage.setItem("vacationID", JSON.stringify(vacation));
+    goTo("adminedit")
   }
   return (
-    <div>
+    <div className='MainDVScroll'>
       <nav className="navbar navbar-expand-lg bg-transparent">
   <p className="navbar-brand navbar-admin">Hello Admin</p>
   <div>
@@ -47,17 +82,20 @@ function AdminPage() {
         <a className="nav-link navbar-text" href="adminadd">Add Vacation</a>
       </li>
       <li className="nav-item">
+        <a className="nav-link navbar-text" href="admingraph">Graph</a>
+      </li>
+      <li className="nav-item">
         <a className="nav-link navbar-text" onClick={()=>goTo("")}>Logout</a>
       </li>
     </ul>
   </div>
 </nav>
 <div className='row'> 
-{ vacations.map(vacation => 
-  <div key={vacation.UserID} className='col-4 mt-4'>
+{ vacations.map((vacation,i) => 
+  <div key={i} className='col-4 mt-4'>
   <div className="card">
   <h4> {vacation.Destination} </h4> 
-  <img className="card-img" src={vacation.Image} alt="Card image cap"/>
+  <img className="card-img" src={GlobalImageUrl + vacation.Image} alt="Card image cap"/>
   <div className="card-description">
   <p className="card-text">{vacation.Description}</p>
   </div>
@@ -65,7 +103,8 @@ function AdminPage() {
       <h2 className='card-price'> {vacation.Price}$</h2>
       <div className='row'>
       <div  className='card-dates col-8'> {format(new Date(vacation.StartDate), "d/MM")} To {format(new Date(vacation.EndDate), "d/MM")}</div >
-      <div className='likeicon' onClick={()=>LikeClicked(vacation)}> Follow <BsFillHeartFill/> </div>
+      <button className='deleteBtn btn-primary' onClick={() => Deletebtn(vacation)} type='button'> Delete </button> 
+      <button className='editBtn btn-primary ml-3' onClick={() => Editbtn(vacation)} type='button'> Edit </button> 
     </div>
     </div>
 </div>
